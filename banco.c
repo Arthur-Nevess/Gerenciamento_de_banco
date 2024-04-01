@@ -4,6 +4,5 @@
 int main()
 {
     printf("Bank...");
-
     return 0;
 }
