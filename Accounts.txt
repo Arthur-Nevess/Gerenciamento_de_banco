@@ -1,0 +1,5 @@
+nome:cleber_neves,conta:123456-7,cpf:321.456.789-10,tipo:poupança,senha:******
+nome:cleber_neves,conta:123456-7,cpf:100.456.789-10,tipo:poupança,senha:******
+nome:cleber_neves,conta:123456-7,cpf:128.456.789-10,tipo:poupança,senha:******
+nome:cleber_neves,conta:123456-7,cpf:143.456.789-10,tipo:poupança,senha:******
+nome:cleber_neves,conta:123456-7,cpf:123.456.789-10,tipo:poupança,senha:******
