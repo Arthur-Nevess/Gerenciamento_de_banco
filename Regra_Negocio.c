@@ -2,77 +2,115 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Regra_Negocio.h"
+#define TAM 50
 
 
 void separa(char dados[100])
 {
-    char nome[50];
-    char cpf[20];
-    char conta[20];
-    char senha[20];
-    int freio=0;
+  //Variaveis de transposição  
 
-    int tamanho_f=strlen(dados);
-    int contador = tamanho_f;
+    char nome[TAM]={0};
+    char cpf[TAM]={0};
+    char conta[TAM]={0};
+    char senha[TAM]={0};
+    char tipo[TAM]={0};
 
-    printf("%d\n", tamanho_f);
-    printf("%d\n", contador);
+  //Variaveis de acesso de índice  
+
+    int nome_a=0;
+    int cpf_a=0;
+    int conta_a=0;
+    int senha_a=0;
+    int tipo_a=0;
     
-    for (int i=0;i<contador;i++)
+  //Variaveis de verificação  
+
+    int freio=0;
+    int tamanho_f=strlen(dados);
+    
+  //Loop  
+
+    for (int i=0;i<tamanho_f;i++)
     {
-        if(dados[i]!= ',' && freio==0)
+        if(dados[i]!=',')
         {
-            nome[i]=dados[i];
-        }
+            
+            if(freio==0)
+            {
+                nome[nome_a++]=dados[i];
+            }
 
-         else if(dados[i]!=',' && freio==1)
-        {
-            conta[i]=dados[i];
-        }
+            else if(freio==1)
+            {
+                conta[conta_a++] = dados[i];
+            }
 
-        else if(dados[i]!=',' && freio==2)
-        {
-            cpf[i]=dados[i];
-        }
+            else if(freio==2)
+            {            
+                cpf[cpf_a++]=dados[i];
+            }
 
-        else if(dados[i]!=',' && freio==3)
-        {
-            senha[i]=dados[i];
-        }
+            else if(freio==3)
+            {
+                
+                tipo[tipo_a++]=dados[i];
+            }
 
+            else if(freio==4)
+            {
+                
+                senha[senha_a++]=dados[i];
+            }
+        }
 
         else
         {
             freio++;
-            
         }
     }
+
+  //Pondo caracter núlo  
+
+    nome[nome_a] = '\0';
+    conta[conta_a] = '\0';
+    cpf[cpf_a] = '\0';
+    tipo[tipo_a] = '\0';
+    senha[senha_a] = '\0';
+
+  //Impressão dos dados separadamente
+
     printf("%s\n", nome);
     printf("%s\n", cpf);
     printf("%s\n", conta);
+    printf("%s\n", tipo); 
     printf("%s\n", senha);
+  
 
-    
-    
 }
 
-int contaExiste(int cpf, char tipo[15]){
+void contaExiste()
+{
 
+  //Abertura e verificação do arquivo
     FILE *f;
-
     char contaFull[100];
     f = fopen("Accounts.txt", "r");
-    if(f != 0){
+    if(f != NULL){
         fscanf(f, " %s" ,contaFull);
     }
-    printf("%s\n", contaFull);
-
+    else
+    {
+        putss("Não foi possivel abrir o banco de dados");
+    }
+   
     separa(contaFull);
+    
+    fclose(f);
 }
 
 int main()
 {
-    contaExiste(10, "poupança");
+    contaExiste();
     
 }
 
