@@ -1,4 +1,2 @@
-4
+2
 Nome:cleber_neves,Conta:123456-7,CPF:321.456.789-10,Tipo:poupança,Senha:******
-Nome:Arthur,Conta:123321-4,CPF:102.411.925-44,Tipo:poupança,Senha:********
-Nome:Louize,Conta:789987-6,CPF:093.458.748-87,Tipo:corrente,Senha:********

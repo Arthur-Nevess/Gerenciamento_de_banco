@@ -1,10 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "Regra_Negocio.h"
 
 informações inf;
 inde ind;
+void valida_nome()
+{
+    int n=strlen(inf.nome);
+    
+
+    for(int i=0;inf.nome[i]!='\0';i++)
+    {
+        if(isdigit(inf.nome[i]))
+        {
+            puts("!!!Não pode conter números no seu nome!!!");
+
+            puts("Digite seu nome corretemente");
+            scanf("%s", &inf.nome);
+            valida_nome();
+        }
+        
+    }
+}
 
 void separa(char dados[120])
 {
@@ -110,6 +129,7 @@ void cadastro()
 
     puts("Digite seu nome:");
     scanf(" %s", &inf.nome);
+    valida_nome();
 
     puts("Digite o número da sua conta");
     scanf(" %s", &inf.conta);
