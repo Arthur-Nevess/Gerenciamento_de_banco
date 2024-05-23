@@ -6,11 +6,10 @@
 
 informações inf;
 inde ind;
+
 void valida_nome()
 {
-    int n=strlen(inf.nome);
     
-
     for(int i=0;inf.nome[i]!='\0';i++)
     {
         if(isdigit(inf.nome[i]))
@@ -22,6 +21,20 @@ void valida_nome()
             valida_nome();
         }
         
+    }
+}
+
+void valida_conta()
+{
+    for (int i=0;inf.conta[i]!='\0';i++)
+    {
+        if(i>9)
+        {
+            puts("!!!O número da conta contem apenas 8 digitos!!!");
+            puts("Digite o número da conta corretamente");
+            scanf("%s", &inf.conta);
+            valida_conta();
+        }
     }
 }
 
@@ -133,6 +146,7 @@ void cadastro()
 
     puts("Digite o número da sua conta");
     scanf(" %s", &inf.conta);
+    valida_conta();
 
     puts("Digite seu cpf");
     scanf(" %s", &inf.cpf);
