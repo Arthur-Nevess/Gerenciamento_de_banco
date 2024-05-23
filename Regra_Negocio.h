@@ -24,5 +24,8 @@ typedef struct index inde;
 
 void contaExiste();
 void separa(char dados[100]);
+void valida_nome();
+void valida_conta();
+void cadastro();
 
 

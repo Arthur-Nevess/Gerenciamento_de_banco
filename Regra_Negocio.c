@@ -28,14 +28,40 @@ void valida_conta()
 {
     for (int i=0;inf.conta[i]!='\0';i++)
     {
-        if(i>9)
+        
+        if(i>8)
         {
-            puts("!!!O número da conta contem apenas 8 digitos!!!");
+            puts("   !!!O número da conta contem apenas 8 digitos!!!");
             puts("Digite o número da conta corretamente");
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
             scanf("%s", &inf.conta);
+            valida_conta();  
+        }
+
+        if(inf.conta[7]!='-')
+        {
+            puts("!!!Coloque o ( - ) no lugar correto!!!");
+            puts("Digite os 8 números da conta corretamente");
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
+            scanf("%s", inf.conta);
             valida_conta();
         }
-    }
+
+
+        inf.conta[7]='0';
+        if(!isdigit(inf.conta[i]))
+        {
+            puts("!!!Deve conter apenas números em sua conta!!!");
+            puts("Digite os 8 números da conta corretamente");
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
+            scanf("%s", inf.conta);
+            valida_conta();           
+        }
+        inf.conta[7]='-';
+    }   
 }
 
 void separa(char dados[120])
@@ -144,8 +170,10 @@ void cadastro()
     scanf(" %s", &inf.nome);
     valida_nome();
 
-    puts("Digite o número da sua conta");
-    scanf(" %s", &inf.conta);
+    puts("Digite os 8 números da sua conta\n");
+    inf.conta[7]='-';
+    printf("_______%c_\r",inf.conta[7]);
+    scanf("%s", &inf.conta);
     valida_conta();
 
     puts("Digite seu cpf");
