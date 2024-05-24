@@ -1,5 +1,3 @@
-5
+3
 Nome:Arthur_Gonçalves_Neves,Conta:1234567-8,CPF:102.411.925-44,Tipo:corrente,Senha:********
-Nome:Louize_Carolina_Santana_Santos,Conta:1233217-4,CPF:093.116.505-95,Tipo:poupança,Senha:********
-Nome:Cleber_Gonçalves_Custodio_Neves,Conta:5197415-7,CPF:096.047.375-88,Tipo:corrente,Senha:********
-Nome:Maria_Betania_Gonçalves_Custodio,Conta:4198726-7,CPF:102.411.925-97,Tipo:corrente,Senha:******
+Nome:Cleber_Gonçalves_Custodio_Neves,Conta:1234567-8,CPF:102.411.925-44,Tipo:corrente,Senha:*******

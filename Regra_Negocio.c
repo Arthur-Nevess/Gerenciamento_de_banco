@@ -34,9 +34,9 @@ void valida_conta()
     for (int i=0;inf2.conta[i]!='\0';i++)
     {
         
-        if(i>8)
+        if(i>8||i<8)
         {
-            puts("   !!!O número da conta contem apenas 8 digitos!!!");
+            puts("   !!!O número da conta deve conter 8 digitos!!!");
             puts("Digite o número da conta corretamente");
             inf2.conta[7]='-';
             printf("_______%c_\r",inf2.conta[7]);
