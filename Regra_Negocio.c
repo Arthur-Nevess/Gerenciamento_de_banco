@@ -5,62 +5,67 @@
 #include "Regra_Negocio.h"
 
 informações inf;
+informações inf2;
 inde ind;
 
 void valida_nome()
 {
     
-    for(int i=0;inf.nome[i]!='\0';i++)
+    for(int i=0;inf2.nome[i]!='\0';i++)
     {
-        if(isdigit(inf.nome[i]))
+        if(isspace(inf2.nome[i]))
+        {
+            inf2.nome[i]='_';
+        }
+        
+        if(isdigit(inf2.nome[i]))
         {
             puts("!!!Não pode conter números no seu nome!!!");
 
             puts("Digite seu nome corretemente");
-            scanf("%s", &inf.nome);
+            scanf("%s", &inf2.nome);
             valida_nome();
         }
-        
     }
 }
 
 void valida_conta()
 {
-    for (int i=0;inf.conta[i]!='\0';i++)
+    for (int i=0;inf2.conta[i]!='\0';i++)
     {
         
         if(i>8)
         {
             puts("   !!!O número da conta contem apenas 8 digitos!!!");
             puts("Digite o número da conta corretamente");
-            inf.conta[7]='-';
-            printf("_______%c_\r",inf.conta[7]);
-            scanf("%s", &inf.conta);
+            inf2.conta[7]='-';
+            printf("_______%c_\r",inf2.conta[7]);
+            scanf("%s", &inf2.conta);
             valida_conta();  
         }
 
-        if(inf.conta[7]!='-')
+        if(inf2.conta[7]!='-')
         {
             puts("!!!Coloque o ( - ) no lugar correto!!!");
             puts("Digite os 8 números da conta corretamente");
-            inf.conta[7]='-';
-            printf("_______%c_\r",inf.conta[7]);
-            scanf("%s", inf.conta);
+            inf2.conta[7]='-';
+            printf("_______%c_\r",inf2.conta[7]);
+            scanf("%s", inf2.conta);
             valida_conta();
         }
 
 
-        inf.conta[7]='0';
-        if(!isdigit(inf.conta[i]))
+        inf2.conta[7]='0';
+        if(!isdigit(inf2.conta[i]))
         {
             puts("!!!Deve conter apenas números em sua conta!!!");
             puts("Digite os 8 números da conta corretamente");
-            inf.conta[7]='-';
-            printf("_______%c_\r",inf.conta[7]);
-            scanf("%s", inf.conta);
+            inf2.conta[7]='-';
+            printf("_______%c_\r",inf2.conta[7]);
+            scanf("%s", inf2.conta);
             valida_conta();           
         }
-        inf.conta[7]='-';
+        inf2.conta[7]='-';
     }   
 }
 
@@ -150,7 +155,8 @@ void contaExiste()
     {
         fscanf(f, " %s" ,&contaFull);
     }
-    printf("(%s)\n",contaFull);
+
+    printf("===============================\n");
     separa(contaFull);
     
     fclose(f);
@@ -167,17 +173,17 @@ void cadastro()
   //Criar validação de tamanho
 
     puts("Digite seu nome:");
-    scanf(" %s", &inf.nome);
+    scanf("%[^\n]", &inf2.nome);
     valida_nome();
 
     puts("Digite os 8 números da sua conta\n");
-    inf.conta[7]='-';
-    printf("_______%c_\r",inf.conta[7]);
-    scanf("%s", &inf.conta);
+    inf2.conta[7]='-';
+    printf("_______%c_\r",inf2.conta[7]);
+    scanf("%s", &inf2.conta);
     valida_conta();
 
     puts("Digite seu cpf");
-    scanf(" %s", &inf.cpf);
+    scanf(" %s", &inf2.cpf);
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
     scanf("%d", &c);
@@ -185,20 +191,20 @@ void cadastro()
     {
         case 1:
         {
-            sprintf(inf.tipo,"poupança");
+            sprintf(inf2.tipo,"poupança");
             break;
         }
 
         case 2:
         {
-             sprintf(inf.tipo, "corrente");
+             sprintf(inf2.tipo, "corrente");
              break;
         }
         
     }
 
     puts("Digite sua senha:");
-    scanf("%s", inf.senha);
+    scanf("%s", inf2.senha);
 
   //Adicionando o cadastro no banco de dados
 
@@ -214,7 +220,7 @@ void cadastro()
     fseek(f,0,SEEK_SET);
     fprintf(f,"%d",n);
     fseek(f,0,SEEK_END);
-    fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf.nome,inf.conta,inf.cpf,inf.tipo,inf.senha);
+    fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf2.nome,inf2.conta,inf2.cpf,inf2.tipo,inf2.senha);
 }
 
 int main()
