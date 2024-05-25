@@ -40,7 +40,7 @@ void valida_conta()
             puts("Digite o número da conta corretamente");
             inf2.conta[7]='-';
             printf("_______%c_\r",inf2.conta[7]);
-            scanf("%s", &inf2.conta);
+            scanf(" %s", &inf2.conta);
             valida_conta();  
         }
 
@@ -50,7 +50,7 @@ void valida_conta()
             puts("Digite os 8 números da conta corretamente");
             inf2.conta[7]='-';
             printf("_______%c_\r",inf2.conta[7]);
-            scanf("%s", inf2.conta);
+            scanf(" %s", inf2.conta);
             valida_conta();
         }
 
@@ -62,7 +62,7 @@ void valida_conta()
             puts("Digite os 8 números da conta corretamente");
             inf2.conta[7]='-';
             printf("_______%c_\r",inf2.conta[7]);
-            scanf("%s", inf2.conta);
+            scanf(" %s", inf2.conta);
             valida_conta();           
         }
         inf2.conta[7]='-';
@@ -173,13 +173,13 @@ void cadastro()
   //Criar validação de tamanho
 
     puts("Digite seu nome:");
-    scanf("%[^\n]", &inf2.nome);
+    scanf(" %[^\n]", &inf2.nome);
     valida_nome();
 
     puts("Digite os 8 números da sua conta\n");
     inf2.conta[7]='-';
     printf("_______%c_\r",inf2.conta[7]);
-    scanf("%s", &inf2.conta);
+    scanf(" %s", &inf2.conta);
     valida_conta();
 
     puts("Digite seu cpf");
@@ -204,7 +204,7 @@ void cadastro()
     }
 
     puts("Digite sua senha:");
-    scanf("%s", inf2.senha);
+    scanf(" %s", inf2.senha);
 
   //Adicionando o cadastro no banco de dados
 
