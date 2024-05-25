@@ -33,8 +33,7 @@ void valida_conta()
 {
     for (int i=0;inf2.conta[i]!='\0';i++)
     {
-        
-        if(i>8||i<8)
+        if(i>8 && i != 9)
         {
             puts("   !!!O número da conta deve conter 8 digitos!!!");
             puts("Digite o número da conta corretamente");
@@ -223,12 +222,12 @@ void cadastro()
     fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf2.nome,inf2.conta,inf2.cpf,inf2.tipo,inf2.senha);
 }
 
-// int main()
-// {
-//     cadastro();
-//     contaExiste();
+int main()
+{
+    cadastro();
+    contaExiste();
     
-// }
+}
 
 
 
