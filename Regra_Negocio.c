@@ -222,12 +222,12 @@ void cadastro()
     fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf2.nome,inf2.conta,inf2.cpf,inf2.tipo,inf2.senha);
 }
 
-int main()
-{
-    cadastro();
-    contaExiste();
+// int main()
+// {
+//     cadastro();
+//     contaExiste();
     
-}
+// }
 
 
 
