@@ -3,10 +3,29 @@
 #include <string.h>
 #include <ctype.h>
 #include "Regra_Negocio.h"
+#include <termios.h>
+#include <unistd.h>
 
 informações inf;
 informações inf2;
 inde ind;
+void configurar_terminal() 
+{
+    struct termios newtio;
+    tcgetattr(STDIN_FILENO, &newtio); // Pega a configuração atual do terminal
+    newtio.c_lflag &= ~ICANON; // Desativa o modo canônico
+    newtio.c_lflag &= ~ECHO;   // Desativa o eco
+    tcsetattr(STDIN_FILENO, TCSANOW, &newtio); // Aplica a nova configuração
+}
+
+void restaurar_terminal()
+{
+    struct termios newtio;
+    tcgetattr(STDIN_FILENO, &newtio); // Pega a configuração atual do terminal
+    newtio.c_lflag |= ICANON; // Ativa o modo canônico
+    newtio.c_lflag |= ECHO;   // Ativa o eco
+    tcsetattr(STDIN_FILENO, TCSANOW, &newtio); // Aplica a nova configuração
+}
 
 void valida_nome()
 {
@@ -155,10 +174,26 @@ void contaExiste()
         fscanf(f, " %s" ,&contaFull);
     }
 
-    printf("===============================\n");
+    printf("\n===============================\n");
     separa(contaFull);
     
     fclose(f);
+}
+
+void omite_senha()
+{
+    for(int i=0;i<9;i++)
+    {
+        configurar_terminal();
+        scanf("%c",&inf2.senha[i]);
+
+        for (int j=0;j<i;j++)
+        {
+            printf("*");
+        }
+        printf("\r");
+    }
+    restaurar_terminal();
 }
 
 void cadastro()
@@ -182,7 +217,8 @@ void cadastro()
     valida_conta();
 
     puts("Digite seu cpf");
-    scanf(" %s", &inf2.cpf);
+    scanf(" %s", inf.cpf);
+    
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
     scanf("%d", &c);
@@ -203,7 +239,7 @@ void cadastro()
     }
 
     puts("Digite sua senha:");
-    scanf(" %s", inf2.senha);
+    omite_senha();
 
   //Adicionando o cadastro no banco de dados
 
@@ -222,12 +258,9 @@ void cadastro()
     fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf2.nome,inf2.conta,inf2.cpf,inf2.tipo,inf2.senha);
 }
 
-// int main()
-// {
-//     cadastro();
-//     contaExiste();
+int main()
+{
+    cadastro();
+    contaExiste();
     
-// }
-
-
-
+}
