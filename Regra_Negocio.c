@@ -182,16 +182,17 @@ void contaExiste()
 
 void omite_senha()
 {
-    for(int i=0;i<9;i++)
+    for(int i=0;i<8;i++)
     {
         configurar_terminal();
-        scanf("%c",&inf2.senha[i]);
+        scanf(" %c",&inf2.senha[i]);
 
-        for (int j=0;j<i;j++)
+        for (int j=0;j<=i;j++)
         {
             printf("*");
         }
         printf("\r");
+        inf2.senha[(i+1)]='\0';
     }
     restaurar_terminal();
 }
