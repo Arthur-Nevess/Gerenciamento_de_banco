@@ -1,14 +1,18 @@
+//Bibliotecas padrão
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
-#include "Regra_Negocio.h"
 #include <termios.h>
 #include <unistd.h>
+//Bibliotecas propias
+#include "Regra_Negocio.h"
 
+//Declarando st
 informações inf;
 informações inf2;
 inde ind;
+
 void configurar_terminal() 
 {
     struct termios newtio;
@@ -30,19 +34,19 @@ void restaurar_terminal()
 void valida_nome()
 {
     
-    for(int i=0;inf2.nome[i]!='\0';i++)
+    for(int i=0;inf.nome[i]!='\0';i++)
     {
-        if(isspace(inf2.nome[i]))
+        if(isspace(inf.nome[i]))
         {
-            inf2.nome[i]='_';
+            inf.nome[i]='_';
         }
         
-        if(isdigit(inf2.nome[i]))
+        if(isdigit(inf.nome[i]))
         {
             puts("!!!Não pode conter números no seu nome!!!");
 
             puts("Digite seu nome corretemente");
-            scanf("%s", &inf2.nome);
+            scanf("%s", &inf.nome);
             valida_nome();
         }
     }
@@ -50,109 +54,41 @@ void valida_nome()
 
 void valida_conta()
 {
-    for (int i=0;inf2.conta[i]!='\0';i++)
+    for (int i=0;inf.conta[i]!='\0';i++)
     {
         if(i>8 && i != 9)
         {
             puts("   !!!O número da conta deve conter 8 digitos!!!");
             puts("Digite o número da conta corretamente");
-            inf2.conta[7]='-';
-            printf("_______%c_\r",inf2.conta[7]);
-            scanf(" %s", &inf2.conta);
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
+            scanf(" %s", &inf.conta);
             valida_conta();  
         }
 
-        if(inf2.conta[7]!='-')
+        if(inf.conta[7]!='-')
         {
             puts("!!!Coloque o ( - ) no lugar correto!!!");
             puts("Digite os 8 números da conta corretamente");
-            inf2.conta[7]='-';
-            printf("_______%c_\r",inf2.conta[7]);
-            scanf(" %s", inf2.conta);
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
+            scanf(" %s", inf.conta);
             valida_conta();
         }
 
 
-        inf2.conta[7]='0';
-        if(!isdigit(inf2.conta[i]))
+        inf.conta[7]='0';
+        if(!isdigit(inf.conta[i]))
         {
             puts("!!!Deve conter apenas números em sua conta!!!");
             puts("Digite os 8 números da conta corretamente");
-            inf2.conta[7]='-';
-            printf("_______%c_\r",inf2.conta[7]);
-            scanf(" %s", inf2.conta);
+            inf.conta[7]='-';
+            printf("_______%c_\r",inf.conta[7]);
+            scanf(" %s", inf.conta);
             valida_conta();           
         }
-        inf2.conta[7]='-';
+        inf.conta[7]='-';
     }   
-}
-
-void separa(char dados[120])
-{
- 
-  //Variaveis de verificação  
-
-    int freio=0;
-    int tamanho_f=strlen(dados);
-    
-  //Loop  
-
-    for (int i=0;i<tamanho_f;i++)
-    {
-        if(dados[i]!=',')
-        {
-            
-            if(freio==0)
-            {
-                inf.nome[ind.nome_a++]=dados[i];
-            }
-
-            else if(freio==1)
-            {
-                inf.conta[ind.conta_a++] = dados[i];
-            }
-
-            else if(freio==2)
-            {            
-                inf.cpf[ind.cpf_a++]=dados[i];
-            }
-
-            else if(freio==3)
-            {
-                
-                inf.tipo[ind.tipo_a++]=dados[i];
-            }
-
-            else if(freio==4)
-            {
-                
-                inf.senha[ind.senha_a++]=dados[i];
-            }
-        }
-
-        else
-        {
-            freio++;
-        }
-    }
-
-  //Pondo caracter núlo  
-
-    inf.nome[ind.nome_a] = '\0';
-    inf.conta[ind.conta_a] = '\0';
-    inf.cpf[ind.cpf_a] = '\0';
-    inf.tipo[ind.tipo_a] = '\0';
-    inf.senha[ind.senha_a] = '\0';
-
-  //Impressão dos dados separadamente
-
-    printf("%s\n", inf.nome);
-    printf("%s\n", inf.cpf);
-    printf("%s\n", inf.conta);
-    printf("%s\n", inf.tipo); 
-    printf("%s\n", inf.senha);
-  
-
 }
 
 void contaExiste()
@@ -175,7 +111,12 @@ void contaExiste()
     }
 
     printf("\n===============================\n");
-    separa(contaFull);
+    
+    printf("%s\n", inf.nome);
+    printf("%s\n", inf.cpf);
+    printf("%s\n", inf.conta);
+    printf("%s\n", inf.tipo); 
+    printf("%s\n", inf.senha);
     
     fclose(f);
 }
@@ -185,14 +126,14 @@ void omite_senha()
     for(int i=0;i<8;i++)
     {
         configurar_terminal();
-        scanf(" %c",&inf2.senha[i]);
+        scanf(" %c",&inf.senha[i]);
 
         for (int j=0;j<=i;j++)
         {
             printf("*");
         }
         printf("\r");
-        inf2.senha[(i+1)]='\0';
+        inf.senha[(i+1)]='\0';
     }
     restaurar_terminal();
 }
@@ -208,17 +149,17 @@ void cadastro()
   //Criar validação de tamanho
 
     puts("Digite seu nome:");
-    scanf(" %[^\n]", &inf2.nome);
+    scanf(" %[^\n]", &inf.nome);
     valida_nome();
 
     puts("Digite os 8 números da sua conta\n");
-    inf2.conta[7]='-';
-    printf("_______%c_\r",inf2.conta[7]);
-    scanf(" %s", &inf2.conta);
+    inf.conta[7]='-';
+    printf("_______%c_\r",inf.conta[7]);
+    scanf(" %s", &inf.conta);
     valida_conta();
 
     puts("Digite seu cpf");
-    scanf(" %s", inf.cpf);
+    scanf(" %s", &inf.cpf);
     
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
@@ -227,13 +168,13 @@ void cadastro()
     {
         case 1:
         {
-            sprintf(inf2.tipo,"poupança");
+            sprintf(inf.tipo,"poupança");
             break;
         }
 
         case 2:
         {
-             sprintf(inf2.tipo, "corrente");
+             sprintf(inf.tipo, "corrente");
              break;
         }
         
@@ -256,12 +197,29 @@ void cadastro()
     fseek(f,0,SEEK_SET);
     fprintf(f,"%d",n);
     fseek(f,0,SEEK_END);
-    fprintf(f,"\nNome:%s,Conta:%s,CPF:%s,Tipo:%s,Senha:%s", inf2.nome,inf2.conta,inf2.cpf,inf2.tipo,inf2.senha);
+    fprintf(f,"\n%s,%s,%s,%s,%s", inf.nome,inf.conta,inf.cpf,inf.tipo,inf.senha);
+}
+
+void login()
+{
+   printf("Digite seu cpf:\n->"); 
+   scanf ("%s", &inf2.cpf);
+   if(strcmp(inf.cpf, inf2.cpf))
+   {
+        printf("\nVocê consta em nosso banco de dados\n");
+   }
+
+   else
+   {
+     puts("\nImpostor do carai\n");
+   }
 }
 
 int main()
 {
-    cadastro();
-    contaExiste();
-    
+   // cadastro();
+   // contaExiste();
+    login();
+
+    return 0;
 }

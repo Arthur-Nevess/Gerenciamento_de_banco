@@ -27,5 +27,8 @@ void separa(char dados[120]);
 void valida_nome();
 void valida_conta();
 void cadastro();
+void configurar_terminal();
+void restaurar_terminal();
+
 
 
