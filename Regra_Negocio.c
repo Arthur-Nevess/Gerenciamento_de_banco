@@ -31,6 +31,11 @@ void restaurar_terminal()
     tcsetattr(STDIN_FILENO, TCSANOW, &newtio); // Aplica a nova configuração
 }
 
+void separa ()
+{
+    
+}
+
 void valida_nome()
 {
     
@@ -217,8 +222,8 @@ void login()
 
 int main()
 {
-   // cadastro();
-   // contaExiste();
+   cadastro();
+   contaExiste();
     login();
 
     return 0;
