@@ -23,7 +23,7 @@ typedef struct index inde;
 
 
 void contaExiste();
-void separa(char dados[120]);
+void separa (char file[10],char tipo[10]);
 void valida_nome();
 void valida_conta();
 void cadastro();

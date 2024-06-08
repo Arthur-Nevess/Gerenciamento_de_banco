@@ -31,9 +31,21 @@ void restaurar_terminal()
     tcsetattr(STDIN_FILENO, TCSANOW, &newtio); // Aplica a nova configuração
 }
 
-void separa ()
+void separa (char file[10],char tipo[10])
 {
-    
+    int freio=0;
+    FILE *f = fopen(file,"r++");
+    if(f==NULL)
+    {
+        printf("Não foi possivel abrir o arquivo %s\n",file);
+    }
+    int n=0;
+    fscanf(f,"%d",&n);
+    n++;
+    fseek(f,0,SEEK_SET);
+    fprintf(f,"%d",n);
+    fseek(f,0,SEEK_END);
+    fprintf(f,"\n%s",tipo);
 }
 
 void valida_nome()
@@ -98,23 +110,6 @@ void valida_conta()
 
 void contaExiste()
 {
-
-  //Abertura e verificação do arquivo
-    FILE *f;
-    char contaFull[120];
-    f = fopen("Accounts.txt", "r");
-    if(f == NULL)
-    {
-        puts("Não foi possivel abrir o banco de dados");
-    }
-    int  n=0;
-
-    fscanf(f,"%d",&n);
-    for(int i=0;i<n;i++);
-    {
-        fscanf(f, " %s" ,&contaFull);
-    }
-
     printf("\n===============================\n");
     
     printf("%s\n", inf.nome);
@@ -122,8 +117,6 @@ void contaExiste()
     printf("%s\n", inf.conta);
     printf("%s\n", inf.tipo); 
     printf("%s\n", inf.senha);
-    
-    fclose(f);
 }
 
 void omite_senha()
@@ -151,20 +144,22 @@ void cadastro()
     sprintf(po,"poupança");
     sprintf(co,"corrente");
     int c = 0;
-  //Criar validação de tamanho
 
     puts("Digite seu nome:");
     scanf(" %[^\n]", &inf.nome);
     valida_nome();
+    separa("Nome.txt",inf.nome);
 
     puts("Digite os 8 números da sua conta\n");
     inf.conta[7]='-';
     printf("_______%c_\r",inf.conta[7]);
     scanf(" %s", &inf.conta);
     valida_conta();
+    separa("Conta.txt",inf.conta);
 
     puts("Digite seu cpf");
     scanf(" %s", &inf.cpf);
+    separa("Cpf.txt",inf.cpf);
     
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
@@ -174,12 +169,14 @@ void cadastro()
         case 1:
         {
             sprintf(inf.tipo,"poupança");
+            separa("tipo.txt",inf.conta);
             break;
         }
 
         case 2:
         {
              sprintf(inf.tipo, "corrente");
+             separa("tipo.txt",inf.conta);
              break;
         }
         
@@ -187,22 +184,7 @@ void cadastro()
 
     puts("Digite sua senha:");
     omite_senha();
-
-  //Adicionando o cadastro no banco de dados
-
-     FILE *f=fopen("Accounts.txt", "r++");
-    if(f==NULL)
-    {
-        puts("Não foi possivel acessar arquivo");
-    }
-
-    int n=0;
-    fscanf(f,"%d",&n);
-    n++;
-    fseek(f,0,SEEK_SET);
-    fprintf(f,"%d",n);
-    fseek(f,0,SEEK_END);
-    fprintf(f,"\n%s,%s,%s,%s,%s", inf.nome,inf.conta,inf.cpf,inf.tipo,inf.senha);
+    separa("senha.txt",inf.senha);
 }
 
 void login()
@@ -224,7 +206,7 @@ int main()
 {
    cadastro();
    contaExiste();
-    login();
+    //login();
 
     return 0;
 }
