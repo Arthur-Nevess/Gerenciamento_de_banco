@@ -50,20 +50,23 @@ void separa (char file[10],char tipo[10])
 
 void valida_nome()
 {
+    int n=0;
     
     for(int i=0;inf.nome[i]!='\0';i++)
     {
+        
         if(isspace(inf.nome[i]))
         {
             inf.nome[i]='_';
+            continue;
         }
-        
-        if(isdigit(inf.nome[i]))
+
+        if(isdigit(inf.nome[i]) || !isalpha(inf.nome[i]))
         {
-            puts("!!!Não pode conter números no seu nome!!!");
+            printf("!!!Digite o nome sem números ou caracteres especiais sem o %c!!!", inf.nome[i]);
 
             puts("Digite seu nome corretemente");
-            scanf("%s", &inf.nome);
+            scanf(" %s",&inf.nome);
             valida_nome();
         }
     }
@@ -108,6 +111,42 @@ void valida_conta()
     }   
 }
 
+void valida_cpf()
+{
+   // for
+}
+
+void valida_tipo(int valida)
+{
+    int n=0;
+    while(!n)
+    {
+        switch(valida)
+        {
+            case 1:
+            {
+                sprintf(inf.tipo,"poupança");
+                n=1;
+                break;
+            }
+
+            case 2:
+            {
+                sprintf(inf.tipo, "corrente");
+                n=1;
+                break;
+            }
+            
+            default :
+            {
+                puts("!!Opção invalida!!");
+                puts("Tecle (1) para conta Poupança ou (2) para conta corrente");
+                scanf("%d",&valida);
+            }
+        }
+    }
+}
+
 void contaExiste()
 {
     printf("\n===============================\n");
@@ -148,42 +187,33 @@ void cadastro()
     puts("Digite seu nome:");
     scanf(" %[^\n]", &inf.nome);
     valida_nome();
-    separa("Nome.txt",inf.nome);
 
     puts("Digite os 8 números da sua conta\n");
     inf.conta[7]='-';
     printf("_______%c_\r",inf.conta[7]);
     scanf(" %s", &inf.conta);
     valida_conta();
-    separa("Conta.txt",inf.conta);
 
     puts("Digite seu cpf");
+    inf.cpf[3]='.';
+    inf.cpf[7]='.';
+    inf.cpf[11]='-';
+    printf("___%c___%c___%c__\r",inf.cpf[3],inf.cpf[7],inf.cpf[11]);
     scanf(" %s", &inf.cpf);
-    separa("Cpf.txt",inf.cpf);
     
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
     scanf("%d", &c);
-    switch(c)
-    {
-        case 1:
-        {
-            sprintf(inf.tipo,"poupança");
-            separa("tipo.txt",inf.conta);
-            break;
-        }
-
-        case 2:
-        {
-             sprintf(inf.tipo, "corrente");
-             separa("tipo.txt",inf.conta);
-             break;
-        }
-        
-    }
+    valida_tipo(c);
 
     puts("Digite sua senha:");
     omite_senha();
+
+  //Guardando cada variavel em seu banco de dados;  
+    separa("Nome.txt",inf.nome);
+    separa("Conta.txt",inf.conta);
+    separa("Cpf.txt",inf.cpf);
+    separa("tipo.txt",inf.tipo);
     separa("senha.txt",inf.senha);
 }
 

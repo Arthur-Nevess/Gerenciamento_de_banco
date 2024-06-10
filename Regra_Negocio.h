@@ -29,6 +29,8 @@ void valida_conta();
 void cadastro();
 void configurar_terminal();
 void restaurar_terminal();
+void valida_tipo(int valida);
+void valida_cpf();
 
 
 
