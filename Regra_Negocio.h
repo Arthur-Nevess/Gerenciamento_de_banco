@@ -30,6 +30,7 @@ void cadastro();
 void configurar_terminal();
 void restaurar_terminal();
 void valida_tipo(int valida);
+void visual_cpf();
 void valida_cpf();
 
 

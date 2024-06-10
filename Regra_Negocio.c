@@ -113,7 +113,23 @@ void valida_conta()
 
 void valida_cpf()
 {
-   // for
+  //Trocando valores especias para validação(. e -)
+    inf.cpf[3]='0';
+    inf.cpf[7]='0';
+    inf.cpf[11]='0';
+
+   for(int i=0;inf.cpf[i]!='\0';i++)
+   {
+        if(!isdigit(inf.cpf[i]))
+        {
+            printf("\n!!Digite apenas números!!  /seu erro ->%c<-\\ \n",inf.cpf[i]);
+            visual_cpf();
+        }
+   }
+    
+    inf.cpf[3]='.';
+    inf.cpf[7]='.';
+    inf.cpf[11]='-';
 }
 
 void valida_tipo(int valida)
@@ -158,6 +174,7 @@ void visual_cpf()
             continue;
         }
         scanf(" %c", &inf.cpf[i]);
+        valida_cpf();
         printf("%c",inf.cpf[i]);
     }
     restaurar_terminal();
@@ -212,9 +229,6 @@ void cadastro()
     valida_conta();
 
     puts("Digite seu cpf");
-    inf.cpf[3]='.';
-    inf.cpf[7]='.';
-    inf.cpf[11]='-';
     visual_cpf();
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
