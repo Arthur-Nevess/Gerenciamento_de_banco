@@ -147,6 +147,23 @@ void valida_tipo(int valida)
     }
 }
 
+void visual_cpf()
+{
+    configurar_terminal();
+    for(int i=0;i<14;i++)
+    {
+        if(i==3||i==7||i==11)
+        {
+            printf("%c",inf.cpf[i]);
+            continue;
+        }
+        scanf(" %c", &inf.cpf[i]);
+        printf("%c",inf.cpf[i]);
+    }
+    restaurar_terminal();
+    puts(" ");
+}
+
 void contaExiste()
 {
     printf("\n===============================\n");
@@ -198,9 +215,7 @@ void cadastro()
     inf.cpf[3]='.';
     inf.cpf[7]='.';
     inf.cpf[11]='-';
-    printf("___%c___%c___%c__\r",inf.cpf[3],inf.cpf[7],inf.cpf[11]);
-    scanf(" %s", &inf.cpf);
-    
+    visual_cpf();
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
     scanf("%d", &c);
