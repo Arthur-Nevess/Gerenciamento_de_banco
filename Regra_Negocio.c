@@ -49,26 +49,27 @@ void separa (char file[10],char tipo[10])
 }
 
 void valida_nome()
-{
-    int n=0;
-    
+{   
+    scanf(" %[^\n]", &inf.nome);
+
     for(int i=0;inf.nome[i]!='\0';i++)
     {
-        
-        if(isspace(inf.nome[i]))
+        if(isdigit(inf.nome[i]) || !isalpha(inf.nome[i]) && inf.nome[i]!=' ')
         {
-            inf.nome[i]='_';
-            continue;
-        }
-
-        if(isdigit(inf.nome[i]) || !isalpha(inf.nome[i]))
-        {
-            printf("!!!Digite o nome sem números ou caracteres especiais sem o %c!!!", inf.nome[i]);
-
+            printf("\033[2J\033[1;1H");
+            printf("!!Digite o nome sem números ou caracteres especiais:%c!!\n", inf.nome[i]);
             puts("Digite seu nome corretemente");
-            scanf(" %s",&inf.nome);
+            memset(&inf.nome,0,sizeof(inf));
             valida_nome();
         }
+    }
+
+    int tam = strlen(inf.nome);
+    if(tam<=9)
+    {
+        printf("\033[2J\033[1;1H");
+        puts("!Escreva seu nome completo!");
+        valida_nome();
     }
 }
 
@@ -78,6 +79,7 @@ void valida_conta()
     {
         if(i>8 && i != 9)
         {
+            printf("\033[2J\033[1;1H");
             puts("   !!!O número da conta deve conter 8 digitos!!!");
             puts("Digite o número da conta corretamente");
             inf.conta[7]='-';
@@ -88,6 +90,7 @@ void valida_conta()
 
         if(inf.conta[7]!='-')
         {
+            printf("\033[2J\033[1;1H");
             puts("!!!Coloque o ( - ) no lugar correto!!!");
             puts("Digite os 8 números da conta corretamente");
             inf.conta[7]='-';
@@ -100,6 +103,7 @@ void valida_conta()
         inf.conta[7]='0';
         if(!isdigit(inf.conta[i]))
         {
+            printf("\033[2J\033[1;1H");
             puts("!!!Deve conter apenas números em sua conta!!!");
             puts("Digite os 8 números da conta corretamente");
             inf.conta[7]='-';
@@ -113,23 +117,28 @@ void valida_conta()
 
 void valida_cpf()
 {
-  //Trocando valores especias para validação(. e -)
-    inf.cpf[3]='0';
-    inf.cpf[7]='0';
-    inf.cpf[11]='0';
-
+    int erro =0;
    for(int i=0;inf.cpf[i]!='\0';i++)
    {
+     if(i==3||i==7||i==11)
+    {
+        continue;
+    }
         if(!isdigit(inf.cpf[i]))
         {
+            printf("\033[2J\033[1;1H");
             printf("\n!!Digite apenas números!!  /seu erro ->%c<-\\ \n",inf.cpf[i]);
-            visual_cpf();
+            memset(&inf.cpf,0,sizeof(inf));
+            erro=1;
+            break;
         }
    }
-    
-    inf.cpf[3]='.';
-    inf.cpf[7]='.';
-    inf.cpf[11]='-';
+
+   if(erro)
+   {
+    visual_cpf();
+   }
+
 }
 
 void valida_tipo(int valida)
@@ -155,6 +164,7 @@ void valida_tipo(int valida)
             
             default :
             {
+                printf("\033[2J\033[1;1H");
                 puts("!!Opção invalida!!");
                 puts("Tecle (1) para conta Poupança ou (2) para conta corrente");
                 scanf("%d",&valida);
@@ -163,9 +173,22 @@ void valida_tipo(int valida)
     }
 }
 
+int eh_backspace(char c)
+{
+    if(c==127)
+    {
+        printf("\b");
+        return 1;
+    }
+    return 0;
+}
+
 void visual_cpf()
 {
-    configurar_terminal();
+    inf.cpf[3]='.';
+    inf.cpf[7]='.';
+    inf.cpf[11]='-';
+
     for(int i=0;i<14;i++)
     {
         if(i==3||i==7||i==11)
@@ -173,9 +196,16 @@ void visual_cpf()
             printf("%c",inf.cpf[i]);
             continue;
         }
-        scanf(" %c", &inf.cpf[i]);
+        char c = getchar();
+        printf("%c",c);
+        inf.cpf[i]=(char)c;
+        if(eh_backspace(c))
+        {
+            i--;
+            continue;
+        }
         valida_cpf();
-        printf("%c",inf.cpf[i]);
+        
     }
     restaurar_terminal();
     puts(" ");
@@ -183,13 +213,15 @@ void visual_cpf()
 
 void contaExiste()
 {
-    printf("\n===============================\n");
     
-    printf("%s\n", inf.nome);
-    printf("%s\n", inf.cpf);
-    printf("%s\n", inf.conta);
-    printf("%s\n", inf.tipo); 
-    printf("%s\n", inf.senha);
+    printf(" SEUS DADOS\n");
+    printf("------------\n");
+    
+    printf("Nome:(%s)\n", inf.nome);
+    printf("CPF:(%s)\n", inf.cpf);
+    //printf("Número da sua conta:(%s)\n", inf.conta);
+    printf("Tipo de conta:(%s)\n", inf.tipo); 
+    printf("Senha de acesso:(%s)\n", inf.senha);
 }
 
 void omite_senha()
@@ -219,28 +251,32 @@ void cadastro()
     int c = 0;
 
     puts("Digite seu nome:");
-    scanf(" %[^\n]", &inf.nome);
-    valida_nome();
+    //valida_nome();
+    printf("\033[2J\033[1;1H");
 
-    puts("Digite os 8 números da sua conta\n");
-    inf.conta[7]='-';
-    printf("_______%c_\r",inf.conta[7]);
-    scanf(" %s", &inf.conta);
-    valida_conta();
+    // puts("Digite os 8 números da sua conta\n");
+    // inf.conta[7]='-';
+    // printf("_______%c_\r",inf.conta[7]);
+    // scanf(" %s", &inf.conta);
+    // valida_conta();
 
-    puts("Digite seu cpf");
+    puts("Digite apenas os números do seu cpf");
+    configurar_terminal();
     visual_cpf();
+    printf("\033[2J\033[1;1H");//Limpando a tela após cada dado entregue
 
     puts("Para criar conta pupança tecle(1) Para conta corrente tecle(2)");
     scanf("%d", &c);
     valida_tipo(c);
+    printf("\033[2J\033[1;1H");
 
     puts("Digite sua senha:");
     omite_senha();
+    printf("\033[2J\033[1;1H");
 
   //Guardando cada variavel em seu banco de dados;  
     separa("Nome.txt",inf.nome);
-    separa("Conta.txt",inf.conta);
+    //separa("Conta.txt",inf.conta);
     separa("Cpf.txt",inf.cpf);
     separa("tipo.txt",inf.tipo);
     separa("senha.txt",inf.senha);
